@@ -1,0 +1,6 @@
+<p *ngFor="let tempProduct of products">
+  <!--A pipe takes in data as input and transforms it to a desired output. 
+    Here,used for currency.
+  reference- https://angular.io/guide/pipes-->
+  {{ tempProduct.name }} : {{ tempProduct.unitPrice | currency: "USD" }}
+</p>
