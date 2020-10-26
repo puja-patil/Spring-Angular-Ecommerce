@@ -11,7 +11,7 @@ export class CartService {
   totalPrice: Subject<number> = new Subject<number>();
   totalQuantity: Subject<number> = new Subject<number>();
 
-  constructor() { }
+  constructor() { console.log("cart service constructor") }
 
   addToCart(theCartItem: CartItem) {
     //check if the item is already is present
