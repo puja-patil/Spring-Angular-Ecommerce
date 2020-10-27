@@ -26,7 +26,8 @@ export class CheckoutComponent implements OnInit {
   billingAddressStates: State[] = [];
 
 
-  constructor(private formBuilder: FormBuilder, private luv2shopFormServie: Luv2ShopFormService) { }
+  constructor(private formBuilder: FormBuilder, private luv2shopFormServie: Luv2ShopFormService,
+    private cartService: CartService) { }
 
   ngOnInit(): void {
     this.checkoutFormGroup = this.formBuilder.group({
@@ -59,9 +60,10 @@ export class CheckoutComponent implements OnInit {
       })
     });
 
+
     //populate credit card months
     const startMonth: number = new Date().getMonth() + 1;
-    console.log(startMonth);
+    //console.log(startMonth);
     this.luv2shopFormServie.getCreditCardMonths(startMonth).subscribe(
       data => {
         console.log("Retreived credit card months:" + JSON.stringify(data));
@@ -85,6 +87,23 @@ export class CheckoutComponent implements OnInit {
       }
     );
 
+
+    //subscribe to cart total price
+    this.cartService.totalPrice.subscribe(
+      data => {
+        this.totalPrice = data
+      }
+    );
+
+    //subscribe to cart total quantity
+    this.cartService.totalQuantity.subscribe(
+      data => {
+        this.totalQuantity = data
+      }
+    )
+
+    //compute cart total price and quantity
+    this.cartService.computeCartTotals();
 
 
 
@@ -175,5 +194,7 @@ export class CheckoutComponent implements OnInit {
     );
 
   }
+
+
 
 }
